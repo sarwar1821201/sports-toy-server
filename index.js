@@ -42,6 +42,7 @@ async function run() {
     res.send(result)
   }  )
 
+
   // get a single card data by using id
     
     app.get('/getAllToy/:id',  async(req,res) => {
@@ -50,6 +51,22 @@ async function run() {
         const result= await toyCollection.findOne(query)
         res.send(result)
     } )
+
+    // get some data from data by using email
+
+    app.get('/getSomeToy' ,async(req,res) => {
+         console.log(req.query.sellerEmail)
+
+         let query= {};
+
+         if(req.query?.sellerEmail){
+            query= {sellerEmail: req.query.sellerEmail }
+         }
+
+        const result= await toyCollection.find(query).toArray();
+        res.send(result)
+    } )
+
 
     // add toy data from client to databse
     app.post('/toyItem', async(req,res)=>{
