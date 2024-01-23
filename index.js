@@ -34,6 +34,15 @@ async function run() {
     const database= client.db('sportsToy');
     const toyCollection= database.collection("toyItems")
 
+  // get alltoy data fro database and send it to client site by server
+    
+  app.get('/getAllToy', async(req,res)=> {
+    const cursor= toyCollection.find();
+    const result= await cursor.toArray();
+    res.send(result)
+  }  )
+
+    // add toy data from client to databse
     app.post('/toyItem', async(req,res)=>{
         const newToyItem= req.body;
        // console.log(newToyItem)
