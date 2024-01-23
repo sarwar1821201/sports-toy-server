@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json())
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
   // console.log(process.env.DB_USER, process.env.DB_PASS)
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.w8gsdns.mongodb.net/?retryWrites=true&w=majority`;
@@ -41,6 +41,15 @@ async function run() {
     const result= await cursor.toArray();
     res.send(result)
   }  )
+
+  // get a single card data by using id
+    
+    app.get('/getAllToy/:id',  async(req,res) => {
+        const id= req.params.id;
+        const query= {_id : new ObjectId (id)  }
+        const result= await toyCollection.findOne(query)
+        res.send(result)
+    } )
 
     // add toy data from client to databse
     app.post('/toyItem', async(req,res)=>{
