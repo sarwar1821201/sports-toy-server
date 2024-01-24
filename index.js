@@ -77,6 +77,17 @@ async function run() {
          
     }  )
 
+
+  // find the card item for update the value by using id
+   app.get('/getSingleToy/:id',  async(req,res) => {
+        const id= req.params.id;
+        const query= {_id : new ObjectId (id)  }
+        const result= await toyCollection.findOne(query)
+        res.send(result)
+    } )
+
+
+
     // delete a card from the database by using id
 
     app.delete('/deleteToyItem/:id', async(req,res) =>{
