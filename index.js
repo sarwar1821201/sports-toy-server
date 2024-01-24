@@ -87,6 +87,28 @@ async function run() {
     } )
 
 
+  // update a single toy
+
+  app.put('/updateSingleToy/:id' , async (req,res) => {
+       const id= req.params.id;
+       const updateToyBody = req.body;
+      // console.log(updateToyBody)
+       const filter= {_id : new ObjectId (id) };
+       const options= { upsert: true};
+       const updateToy = {
+          $set : {
+            name: updateToyBody.toyName,
+            price:updateToyBody.toyPrice,
+            quantity:updateToyBody.toyQuantity,
+            ratings:updateToyBody.toyRatings,
+            details:updateToyBody.toyDetails
+          }
+       }
+       const result = await toyCollection.updateOne(filter,updateToy,options)
+       res.send(result)
+  } )
+
+
 
     // delete a card from the database by using id
 
